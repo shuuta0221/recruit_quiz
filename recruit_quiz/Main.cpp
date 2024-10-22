@@ -103,6 +103,8 @@ int main() {
 	cin >> subject;
 	if (subject == 2) {
 		questions = CreateKanjiExam();
+		const QuestionList idomExam = CreateIdiomExam();
+		questions.insert(questions.end(), idomExam.begin(), idomExam.end());
 	}
 
 	for (const auto& e : questions) {
