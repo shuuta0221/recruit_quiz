@@ -107,6 +107,8 @@ int main() {
 		questions.insert(questions.end(), idomExam.begin(), idomExam.end());
 		QuestionList homophoneExam = CreateHomophoneExam();
 		questions.insert(questions.end(), homophoneExam.begin(), homophoneExam.end());
+		QuestionList antonymExan = CreateAntonymExam();
+		questions.insert(questions.end(), antonymExan.begin(), antonymExan.end());
 	}
 
 	for (const auto& e : questions) {
