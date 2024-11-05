@@ -1,5 +1,5 @@
 #pragma once
-#include "quwstion.h"
+#include "question.h"
 
 // Š¿š‚Ì“Ç‚İæ‚è–â‘è‚ğì¬‚·‚é
 QuestionList CreateKanjiExam();
