@@ -4,6 +4,7 @@
 #include "exam_science.h"
 #include "exam_geography.h"
 #include "exam_politics.h"
+#include "utility.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -131,6 +132,13 @@ int main() {
 		cout << e.s << "\n";
 		string answer;
 		cin >> answer;
+
+		const string ascii = ConvertSjisNumberToAscii(answer);
+		//•ÏŠ·‚ª¬Œ÷‚µ‚½ê‡‚Í•¶š—ñ‚ğ’u‚«Š·‚¦‚é
+		if (!ascii.empty()) {
+			answer = ascii;
+		}
+
 		if (answer == e.a) {
 			cout << "³‰ğI\n";
 		}
