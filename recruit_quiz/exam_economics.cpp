@@ -1,4 +1,4 @@
-#include "exam_politics.h"
+#include "exam_economics.h"
 #include "utility.h"
 #include <fstream>
 #include <iostream>
@@ -7,21 +7,21 @@
 using namespace std;
 
 /*
-* 日本の政治の問題を作成する
+* 経済の問題を作成する
 */
-QuestionList CreatePoliticsExam()
+QuestionList CreateEconomicsExam()
 {
-	//政治問題データ
-	struct PoliticsData
+	//経済問題データ
+	struct EconomicsData
 	{
 		string genre;			//ジャンル
 		string text;			//問題文
-		vector<string> answers;	//空欄に入る答えの配列
+		vector<vector<string>> answers;	//答えの配列
 	};
-	unordered_map<string, vector<PoliticsData>> data;
+	unordered_map<string, vector<EconomicsData>> data;
 
-	{//政治問題データを読み込む
-		constexpr char filename[] = "japanese_politics.txt";
+	{//経済問題データを読み込む
+		constexpr char filename[] = "japanese_economics.txt";
 		ifstream ifs(filename);
 		if (!ifs) {
 			cerr << "エラー:" << filename << "を読み込めません\n";
@@ -36,9 +36,17 @@ QuestionList CreatePoliticsExam()
 			}
 			const vector<string> v = Split(s, ',');
 			const string& genre = v[0];	//ジャンルを取得
-			data[genre].push_back({ genre,v[1],vector<string>(v.begin() + 2,v.end()) });
+
+			//答えを解析
+			vector<vector<string>> answers;
+			for (auto i = v.begin() + 2; i != v.end(); i++) {
+				answers.push_back(Split(*i, '|'));
+			}
+
+			//問題データを追加
+			data[genre].push_back({ genre,v[1],answers });
 		}
-	}//政治問題データを読み込む
+	}//経済問題データを読み込む
 
 	constexpr int genreCount = 2;	//出題するジャンル数
 	constexpr int quizCount = 5;	//各ジャンルの出題数
@@ -79,17 +87,24 @@ QuestionList CreatePoliticsExam()
 				s.append(question.text, from, end - from);	//空欄の手前までの範囲をコピー
 
 				if (k != index) {
-					s += question.answers[k];	//選ばれなかった空欄の場合は答えをコピー
-				} else {
+					s += question.answers[k][0];	//選ばれなかった空欄の場合は答えをコピー
+				}
+				else {
 					s.append("[ ? ]");	//選ばれた空欄の場合は「表示用の空欄文字列」をコピー
 				}
 				from = end + 2;	//コピー元の位置を更新
 			}
 			s.append(question.text, from);	//問題文の末尾部分をコピー
 
-			questions.push_back({ s,question.answers[index] });
+			questions.push_back({ s,question.answers[index][0]});
+
+			//答えが複数ありうる場合、それらを「答えb」の配列に代入
+			const auto& answer = question.answers[index];
+			if (answer.size() > 1) {
+				questions.back().b.assign(answer.begin() + 1, answer.end());
+			}
 		}// for j < quizCount
-	}// for i < genreCount
+	}// for i <genreCount
 
 	return questions;
 }
