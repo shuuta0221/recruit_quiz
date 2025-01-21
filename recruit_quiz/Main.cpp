@@ -25,15 +25,7 @@ int main() {
 	if (subject == 1) {
 		questions = CreateMathematicsExam();
 	} else if (subject == 2) {
-		questions = CreateKanjiExam();
-		const QuestionList idomExam = CreateIdiomExam();
-		questions.insert(questions.end(), idomExam.begin(), idomExam.end());
-		QuestionList homophoneExam = CreateHomophoneExam();
-		questions.insert(questions.end(), homophoneExam.begin(), homophoneExam.end());
-		QuestionList antonymExan = CreateAntonymExam();
-		questions.insert(questions.end(), antonymExan.begin(), antonymExan.end());
-		QuestionList synonymExam = CreateSynonymExam();
-		questions.insert(questions.end(), synonymExam.begin(), synonymExam.end());
+		questions = CreateJapaneseExam();
 	} else if(subject == 3) {
 		questions = CreateEnglishWordExam();
 		QuestionList phraseExam = CreateEnglishPhraseExam();

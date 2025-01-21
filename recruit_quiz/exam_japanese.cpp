@@ -276,10 +276,10 @@ QuestionList CreateSynonymExam()
 		const char* kanji[4];	//—Ş‹`Œê‚Ì”z—ñ
 	} data[] = {
 		{2,"’‡‰î(‚¿‚ã‚¤‚©‚¢)","ˆ´ù(‚ ‚Á‚¹‚ñ)"},
-		{2,"‰ˆŠv(‚¦‚ñ‚©‚­)","•Ï‘J()"},
-		{2,"‰ğŒÙ(‚©‚¢‚±)","”ë–Æ()"},
-		{2,"‰Ë‹ó(‚©‚­‚¤)","‹•\()"},
-		{2,"‹@•q(‚«‚Ñ‚ñ)","v‘¬()"},
+		{2,"‰ˆŠv(‚¦‚ñ‚©‚­)","•Ï‘J(‚Ö‚ñ‚¹‚ñ)"},
+		{2,"‰ğŒÙ(‚©‚¢‚±)","”ë–Æ(‚Ğ‚ß‚ñ)"},
+		{2,"‰Ë‹ó(‚©‚­‚¤)","‹•\(‚«‚å‚±‚¤)"},
+		{2,"‹@•q(‚«‚Ñ‚ñ)","v‘¬(‚¶‚ñ‚»‚­)"},
 		{3,"šîÀ(‚æ‚¤‚¹‚¢)","šîÜ(‚æ‚¤‚¹‚Â)","‘¢(‚»‚¤‚¹‚¢)"},
 		{3,"ŒğÂ(‚±‚¤‚µ‚å‚¤)","ÜÕ(‚¹‚Á‚µ‚å‚¤)","‹¦‹c(‚«‚å‚¤‚¬)"},
 		{3,"”²ŒQ(‚Î‚Â‚®‚ñ)","Œ†o(‚¯‚Á‚µ‚ã‚Â)","oF(‚µ‚ã‚Á‚µ‚å‚­)"},
@@ -332,5 +332,23 @@ QuestionList CreateSynonymExam()
 
 		questions.push_back({ s,to_string(correctNo) });
 	}
+	return questions;
+}
+
+/*
+* ‘Œê‚Ì–â‘è‚ğì¬‚·‚é
+*/
+QuestionList CreateJapaneseExam()
+{
+	QuestionList questions;
+	questions = CreateKanjiExam();
+	const QuestionList idomExam = CreateIdiomExam();
+	questions.insert(questions.end(), idomExam.begin(), idomExam.end());
+	QuestionList homophoneExam = CreateHomophoneExam();
+	questions.insert(questions.end(), homophoneExam.begin(), homophoneExam.end());
+	QuestionList antonymExan = CreateAntonymExam();
+	questions.insert(questions.end(), antonymExan.begin(), antonymExan.end());
+	QuestionList synonymExam = CreateSynonymExam();
+	questions.insert(questions.end(), synonymExam.begin(), synonymExam.end());
 	return questions;
 }
